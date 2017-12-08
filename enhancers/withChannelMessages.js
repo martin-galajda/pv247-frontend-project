@@ -4,8 +4,6 @@ import { compose, mapProps, withHandlers } from 'recompose'
 import { withRouter } from 'next/router'
 import { mergeDeepRight } from 'ramda'
 
-let subscribers = []
-
 export default compose(
   withRouter,
   connect(state => ({

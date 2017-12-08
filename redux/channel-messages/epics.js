@@ -68,13 +68,11 @@ const startPullingMessages = action$ => action$
     const urlPartStart = /channels\//
     const uuidRegexp = /[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/
     const isChannelMessagesRoute = new RegExp(urlPartStart.source + uuidRegexp.source)
-    
+
     if (isChannelMessagesRoute.test(url)) {
       const channelId = url.replace('/channels/', '')
       const pullMessagesPeriodically$ = Observable.interval(10000)
-        .switchMap(() => {
-          return Observable.of(requestGetChannelMessages(channelId))
-        })
+        .switchMap(() => Observable.of(requestGetChannelMessages(channelId)))
 
       return Observable
         .of(requestGetChannelMessages(channelId))

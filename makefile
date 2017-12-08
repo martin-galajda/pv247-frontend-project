@@ -13,4 +13,7 @@ lint: install
 test: install
 	jest
 
-.PHONY: install lint
+dev: install
+	npm run dev
+
+.PHONY: install lint test dev
