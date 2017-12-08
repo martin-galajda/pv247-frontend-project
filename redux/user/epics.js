@@ -1,13 +1,14 @@
 import UserService from '../../services/api/UserService'
+import { routeChangeComplete$ } from '../../services/router-observable'
 import * as ACTION_TYPES from './action-types'
-import { 
+import {
   getUserDataFailure,
   getUserDataSuccess,
   requestGetUserData,
   updateUserDataSuccess,
   updateUserDataFailure,
   checkRouteAuth,
-  authChecked
+  authChecked,
 } from './actions'
 import { actionTypes } from '..'
 import { Observable } from 'rxjs'
@@ -19,34 +20,24 @@ const loginSuccessEpic = action$ => action$
     const { accessToken, email } = action.payload
     localStorage.setItem('accessToken', accessToken)
     localStorage.setItem('userEmail', email)
-    Router.push('/home')
-    
+    Router.push('/')
+
     return Observable.of(requestGetUserData(action.payload))
   })
 
 const getUserDataEpic = action$ => action$
   .ofType(ACTION_TYPES.REQUEST_GET_USER_DATA)
-  .switchMap(action => {
-    return Observable
-      .fromPromise(UserService.getUserData(action.payload))
-      .map(userData => getUserDataSuccess(userData, action.path))
-      .catch(error => {
-        console.log(error)
-        return Observable.of(getUserDataFailure(error))
-      })
-  })
+  .switchMap(action => Observable
+    .fromPromise(UserService.listUsers())
+    .map(users => getUserDataSuccess({ users, currentUser: action.payload, path: action.path }))
+    .catch(error => Observable.of(getUserDataFailure(error))))
 
 const uploadUserDataEpic = action$ => action$
   .ofType(ACTION_TYPES.REQUEST_UPDATE_USER_DATA)
-  .switchMap(action => {
-    return Observable
-      .fromPromise(UserService.updateUserCustomData(action.payload.email, action.payload.customData))
-      .map(userData => updateUserDataSuccess(action.payload.customData))
-      .catch(error => {
-        console.log(error)
-        return Observable.of(updateUserDataFailure(error))
-      })
-  })
+  .switchMap(action => Observable
+    .fromPromise(UserService.updateUserCustomData(action.payload.email, action.payload.customData))
+    .map(() => updateUserDataSuccess(action.payload.customData))
+    .catch(error => Observable.of(updateUserDataFailure(error))))
 
 const getUserDataSuccessEpic = action$ => action$
   .ofType(ACTION_TYPES.GET_USER_DATA_SUCCESS)
@@ -56,7 +47,7 @@ const getUserDataSuccessEpic = action$ => action$
 const getUserDataFailureEpic = action$ => action$
   .ofType(ACTION_TYPES.GET_USER_DATA_FAILURE)
   .switchMap(action => Observable.of(checkRouteAuth({ path: action.path, hasValidAccessToken: false })))
-  
+
 const checkRouteEpic = action$ => action$
   .ofType(ACTION_TYPES.CHECK_ROUTE_AUTH)
   .switchMap(action => {
@@ -65,20 +56,22 @@ const checkRouteEpic = action$ => action$
 
     if (!action.payload.hasValidAccessToken && !isPublicRoute) {
       changingRoute = true
-      Router.push('/index', '/login')
+      Router.push('/login')
     } else if (action.payload.hasValidAccessToken && isPublicRoute) {
       changingRoute = true
-      Router.push('/home')
+      Router.push('/')
     }
 
-    const resolveAfterRouteChanges = new Promise((resolve, reject) => {
+    const resolveAfterRouteChanges = new Promise(resolve => {
       if (!changingRoute) {
         resolve(authChecked(action.payload.hasValidAccessToken))
-      } else {
-        setTimeout(() => {
-          resolve(authChecked(action.payload.hasValidAccessToken))
-        }, 500)
       }
+
+      routeChangeComplete$
+        .first()
+        .subscribe(() => {
+          resolve(authChecked(action.payload.hasValidAccessToken))
+        })
     })
 
     return Observable.fromPromise(resolveAfterRouteChanges)
@@ -91,7 +84,7 @@ const epics = [
   loginSuccessEpic,
   uploadUserDataEpic,
   getUserDataFailureEpic,
-  checkRouteEpic
+  checkRouteEpic,
 ]
 
 export default epics

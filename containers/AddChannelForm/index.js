@@ -1,4 +1,19 @@
-import withAddChannelFormHandlers from '../../enhancers/withAddChannelFormHandlers'
-import AddChannelForm from '../../components/AddChannelForm'
+import withChannelFormHandler from '../../enhancers/withChannelFormHandler'
+import withSpinner from '../../enhancers/withSpinner'
+import ManageChannelForm from '../../components/ManageChannelForm'
 
-export default withAddChannelFormHandlers(AddChannelForm)
+import { connect } from 'react-redux'
+import { actions } from '../../redux'
+import { compose, withProps, withState } from 'recompose'
+
+export default compose(
+  connect(null, {
+    submitChannel: actions.channels.requestAddChannel,
+  }),
+  withState('invitees', 'updateInvitees', []),
+  withProps({
+    title: 'Add new channel',
+  }),
+  withChannelFormHandler,
+  withSpinner,
+)(ManageChannelForm)

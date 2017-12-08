@@ -1,16 +1,15 @@
 import withRedux from '../enhancers/withRedux'
 import withAuth from '../enhancers/withAuth'
-import LoginForm from '../containers/LoginForm'
 import App from '../components/App'
+import Layout from '../containers/Layout'
 
-import { compose, lifecycle } from 'recompose'
-const IndexPage = () => (
-    <App>
-        <LoginForm />
-    </App>
+const HomePage = () => (
+  <App>
+    <Layout>
+        Content...
+    </Layout>
+  </App>
 )
 
-export default compose(
-    withRedux,
-    withAuth
-)(IndexPage)
+export default withRedux(withAuth(HomePage))
+

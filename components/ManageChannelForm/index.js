@@ -1,20 +1,18 @@
 import propTypes from 'prop-types'
 import { Field } from 'redux-form'
-import { branch, renderNothing, withState } from 'recompose'
 import { Form, FormInput, FormInputLabel, Title, ReactTokenInputLabel, ButtonsContainer } from './styled'
 import ReactTokenInput from '../ReactTokenInput'
 import PositiveButton from '../Buttons/Positive'
 
-const AddChannelForm = ({ onSave, submitting, onAddInvitee, onRemoveInvitee, invitees }) => (
+const AddChannelForm = ({ title, onSave, onAddInvitee, onRemoveInvitee, invitees, users }) => (
   <Form>
-    <Title>Add new channel</Title>
+    <Title>{title}</Title>
     <FormInput>
       <FormInputLabel>Channel name</FormInputLabel>
       <Field
         name="name"
         component="input"
         type="text"
-        autoFocus
       />
     </FormInput>
 
@@ -23,17 +21,20 @@ const AddChannelForm = ({ onSave, submitting, onAddInvitee, onRemoveInvitee, inv
       onRemove={onRemoveInvitee}
       selected={invitees}
       onAdd={onAddInvitee}
+      availableItems={users}
     />
     <ButtonsContainer>
-      <PositiveButton onClick={onSave} type="button" width={"50%"}>Add</PositiveButton>
+      <PositiveButton onClick={onSave} type="button" width={'50%'}>Save</PositiveButton>
     </ButtonsContainer>
   </Form>
 )
 
 AddChannelForm.propTypes = {
   onSave: propTypes.func.isRequired,
-  onCancel: propTypes.func.isRequired,
-  submitting: propTypes.bool.isRequired,
+  onAddInvitee: propTypes.func.isRequired,
+  onRemoveInvitee: propTypes.func.isRequired,
+  invitees: propTypes.array.isRequired,
+  users: propTypes.array.isRequired,
   title: propTypes.string.isRequired,
 }
 

@@ -2,16 +2,19 @@ import * as ACTION_TYPES from './action-types'
 
 export const requestGetUserData = ({ path, ...user }) => ({
   type: ACTION_TYPES.REQUEST_GET_USER_DATA,
-  payload: { 
+  payload: {
     ...user,
   },
-  path,  
+  path,
 })
 
-export const getUserDataSuccess = (userData, path) => ({
+export const getUserDataSuccess = ({ currentUser, users, path }) => ({
   type: ACTION_TYPES.GET_USER_DATA_SUCCESS,
-  payload: userData,
-  path
+  payload: {
+    currentUser,
+    users,
+  },
+  path,
 })
 
 export const checkRouteAuth = ({ path, hasValidAccessToken }) => ({

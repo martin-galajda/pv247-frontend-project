@@ -1,8 +1,19 @@
-import { ROUTE_CHANGED } from './action-types'
+import { ROUTE_CHANGE_START, ROUTE_CHANGE_FINISH, INIT } from './action-types'
 
-export const routeChanged = asUrl => ({
-  type: ROUTE_CHANGED,
+export const routeChangeStart = url => ({
+  type: ROUTE_CHANGE_START,
   payload: {
-    asUrl,
+    url,
   },
+})
+
+export const routeChangeFinish = url => ({
+  type: ROUTE_CHANGE_FINISH,
+  payload: {
+    url,
+  },
+})
+
+export const routerInit = () => ({
+  type: INIT,
 })

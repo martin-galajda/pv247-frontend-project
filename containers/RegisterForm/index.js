@@ -1,4 +1,4 @@
-import LoginForm from '../../components/LoginForm'
+import RegisterForm from '../../components/RegisterForm'
 import withRegister from '../../enhancers/withRegister'
 
-export default withRegister(LoginForm)
+export default withRegister(RegisterForm)

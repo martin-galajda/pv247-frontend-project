@@ -19,7 +19,7 @@ export const uploadFileSuccess = (uploadedFiles, actionCreatorOnSuccess) => ({
 export const uploadFileFailure = response => ({
   type: ACTION_TYPES.FILE_UPLOAD_FAILURE,
   payload: response,
-}) 
+})
 
 export const requestGetUploadedFileUrl = uuid => ({
   type: ACTION_TYPES.REQUEST_GET_UPLOADED_FILE_URL,
@@ -37,4 +37,4 @@ export const getUploadedFileUrlSuccess = (uploadedFileUrl, actionCreatorOnSucces
 export const getUploadedFileUrlFailure = response => ({
   type: ACTION_TYPES.GET_UPLOADED_FILE_URL_FAILURE,
   payload: response,
-}) 
+})

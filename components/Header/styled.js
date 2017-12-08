@@ -4,6 +4,7 @@ export const HeaderBar = styled.div`
     width: 100%;
     background: whitesmoke;
     display: flex;
+    height: 60px;
 `
 
 export const Title = styled.div`

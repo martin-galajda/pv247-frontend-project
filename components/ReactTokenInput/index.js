@@ -1,20 +1,12 @@
 
-import { Container, InputArea, InputAreaItem, IconWrapper, SelectedInputAreaItem } from './styled'
-import CloseIcon from 'react-icons/lib/fa/close'
+import { Container, InputArea, InputAreaItem } from './styled'
 import PropTypes from 'prop-types'
 import { withState } from 'recompose'
 import AutoresizeInput from '../AutoresizeInput'
+import AvailableItems from '../AvailableItems'
+import SelectedInput from './selectedInput'
 
 const withTokenInputState = withState('inputValue', 'onChangeInput', '')
-
-const SelectedInput = ({ onDeselect, value }) => (
-  <SelectedInputAreaItem>
-    <IconWrapper onClick={() => onDeselect(value)} >
-      <CloseIcon />
-    </IconWrapper>
-    {value}
-  </SelectedInputAreaItem>
-)
 
 const invokeOnEnterPressed = callbacks => e => {
   const ENTER_KEY_CODE = 13
@@ -23,7 +15,7 @@ const invokeOnEnterPressed = callbacks => e => {
   }
 }
 
-const ReactTokenInput = ({ selected, onRemove, onAdd, onChangeInput, inputValue }) => {
+const ReactTokenInput = ({ selected, onRemove, onAdd, onChangeInput, inputValue, availableItems }) => {
   let inputRef
 
   const focusInputRef = () => {
@@ -35,18 +27,18 @@ const ReactTokenInput = ({ selected, onRemove, onAdd, onChangeInput, inputValue 
   return (
     <Container onClick={focusInputRef}>
       <InputArea>
-        {selected.map((selectedValue, idx) => <SelectedInput 
-          key={`${selectedValue}-${idx}`} 
+        {selected.map((selectedValue, idx) => (<SelectedInput
+          key={`${selectedValue}-${idx}`}
           value={selectedValue}
           onDeselect={onRemove}
-        />)}
+        />))}
         <InputAreaItem>
           <AutoresizeInput
             onChange={e => {
               const value = e.target.value
               onChangeInput(() => value)
             }}
-            getRef={input => inputRef = input}
+            getRef={input => { inputRef = input }}
             onBlur={() => {
               if (inputValue) {
                 onAdd(inputValue)
@@ -56,12 +48,15 @@ const ReactTokenInput = ({ selected, onRemove, onAdd, onChangeInput, inputValue 
             placeholder="Enter user email"
             value={inputValue}
             letterWidth={12.5}
-            onKeyDown={invokeOnEnterPressed([ onAdd, function clearInput() {
+            onKeyDown={invokeOnEnterPressed([onAdd, function clearInput() {
               onChangeInput(() => '')
             }])}
           />
         </InputAreaItem>
       </InputArea>
+      <AvailableItems items={availableItems} filterByName={inputValue} show={Boolean(inputValue.length)}>
+
+      </AvailableItems>
     </Container>
   )
 }
@@ -72,6 +67,7 @@ ReactTokenInput.propTypes = {
   onAdd: PropTypes.func.isRequired,
   onChangeInput: PropTypes.func.isRequired,
   inputValue: PropTypes.string.isRequired,
+  availableItems: PropTypes.array.isRequired,
 }
 
 export default withTokenInputState(ReactTokenInput)

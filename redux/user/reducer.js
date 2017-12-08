@@ -1,39 +1,48 @@
-import { merge } from 'ramda'
+import { mergeDeepRight } from 'ramda'
 import * as ACTION_TYPES from './action-types'
-import { decodeStrAsJSON } from '../../utils/encodeUtils'
+import { actionTypes as ALL_ACTION_TYPES } from '../'
 
 const initialState = {
-  email: null,
-  customData: null,
+  currentUser: {
+    email: null,
+    customData: null,
+    temporaryAvatarImageUrl: null,
+  },
+  allUsers: null,
   error: null,
-  initialized: false,
-  temporaryAvatarImageUrl: null,
 }
 
-const parseCustomDataString = customDataString => {
-  return decodeStrAsJSON(customDataString)
-}
+const getCurrentUser = (allUsers, currentUser) => allUsers.find(user => currentUser.email === user.email)
 
 const reducer = (state = initialState, action) => {
+  let currentUserData
+
   switch (action.type) {
     case ACTION_TYPES.GET_USER_DATA_SUCCESS:
-      return merge(state, {
-        email: action.payload.email,
-        customData: action.payload.customData ? parseCustomDataString(action.payload.customData) : null,
+      currentUserData = getCurrentUser(action.payload.users, action.payload.currentUser)
+      return mergeDeepRight(state, {
+        currentUser: currentUserData,
+        allUsers: action.payload.users,
       })
     case ACTION_TYPES.GET_USER_DATA_FAILURE:
-      return merge(state, {
+      return mergeDeepRight(state, {
         error: action.payload,
       })
     case ACTION_TYPES.USER_UPDATE_DATA_SUCCESS:
-      return merge(state, {
-        customData: action.payload,
+      return mergeDeepRight(state, {
+        currentUser: {
+          customData: action.payload,
+        },
       })
 
     case ACTION_TYPES.UPLOAD_AVATAR_IMAGE_URL:
-      return merge(state, {
-        temporaryAvatarImageUrl: action.payload,
+      return mergeDeepRight(state, {
+        currentUser: {
+          temporaryAvatarImageUrl: action.payload,
+        },
       })
+    case ALL_ACTION_TYPES.auth.LOGOUT:
+      return initialState
     default:
       return state
   }

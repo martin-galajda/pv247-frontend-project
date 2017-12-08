@@ -11,5 +11,13 @@
         ]
       }
     ]
-  ]
+  ],
+  "env": {
+    "test": {
+      "presets": [
+        ["env", { "modules": "commonjs" }],
+        "next/babel"
+      ]
+    }
+  }
 }

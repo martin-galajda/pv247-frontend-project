@@ -1,12 +1,7 @@
 
-import UserIcon from 'react-icons/lib/fa/user'
-import PropTypes from 'prop-types'
-import { branch, renderComponent } from 'recompose'
 import { ProfilePhoto } from './styled'
+import { withProps } from 'recompose'
 
-const UserPhoto = branch(
-  props => !props.user.customData || !props.user.customData.profileImageUrl,
-  renderComponent(UserIcon)
-)(ProfilePhoto)
-
-export default UserPhoto
+export default withProps({
+  defaultImageUrl: 'https://cdn2.iconfinder.com/data/icons/website-icons/512/User_Avatar-512.png',
+})(ProfilePhoto)

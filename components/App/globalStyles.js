@@ -1,5 +1,6 @@
 import { injectGlobal } from 'styled-components'
 
+/* eslint-disable no-unused-expressions */
 injectGlobal`
   @font-face {
     font-family: 'Trump Gothic East';
@@ -11,7 +12,7 @@ injectGlobal`
   @font-face {
     font-family: 'Maison Neue';
     src:
-      url('/static/fonts/maison-neue_book.otf') format('opentype'),
+      url('/static/fonts/maison-neue-book.ttf') format('truetype'),
       url('/static/fonts/maison-neue_book.woff2') format('woff2'),
       url('/static/fonts/maison-neue_book.woff') format('woff');
   }
@@ -56,5 +57,16 @@ injectGlobal`
 
   .ReactModal__Overlay {
     z-index: 150;
+  }
+
+  @keyframes icon-spin {
+    0% {
+      -webkit-transform: rotate(0deg);
+      transform: rotate(0deg);
+    }
+    100% {
+      -webkit-transform: rotate(359deg);
+      transform: rotate(359deg);
+    }
   }
 `

@@ -1,23 +1,9 @@
-import { SidebarContainer, SidebarItem, SidebarSectionHeader, SidebarSectionHeaderTitle, IconsWrapper } from './styled'
-import ChannelTitle from './channel'
+import { SidebarContainer, SidebarSectionHeader, SidebarSectionHeaderTitle, IconsWrapper } from './styled'
+import ChannelTitle from './channel-title'
 import PlusIcon from 'react-icons/lib/fa/plus'
+import PropTypes from 'prop-types'
 
-const items = [
-  {
-    name: 'frontend',
-  },
-  {
-    name: 'backend',
-  },
-  {
-    name: 'design',
-  },
-  {
-    name: 'cooking',
-  },
-]
-
-const Sidebar = ({ onAddChannel, channels, removeChannel }) => (
+const Sidebar = ({ onAddChannel, channels, removeChannel, editChannel, router }) => (
   <SidebarContainer>
     <SidebarSectionHeader>
       <SidebarSectionHeaderTitle>
@@ -28,10 +14,25 @@ const Sidebar = ({ onAddChannel, channels, removeChannel }) => (
       </IconsWrapper>
     </SidebarSectionHeader>
 
-    {channels.map((channel, idx) => (
-      <ChannelTitle removeChannel={removeChannel} key={idx} {...channel}/>
-    ))}
+    {channels.map(channel =>
+      (<ChannelTitle
+        removeChannel={removeChannel}
+        editChannel={editChannel}
+        key={channel.id}
+        router={router}
+        {...channel}
+      />))
+    }
   </SidebarContainer>
 )
+
+Sidebar.propTypes = {
+  onAddChannel: PropTypes.func.isRequired,
+  removeChannel: PropTypes.func.isRequired,
+  editChannel: PropTypes.func.isRequired,
+  channels: PropTypes.array.isRequired,
+  router: PropTypes.object.isRequired,
+}
+
 
 export default Sidebar

@@ -2,23 +2,24 @@ import Modal from 'react-modal'
 import ProfileSettings from '../../containers/ProfileSettingsForm'
 import CloseIcon from 'react-icons/lib/fa/close'
 import { ModalHeader, IconWrapper, ModalFooter } from './styled'
+import PropTypes from 'prop-types'
 
 const customStyles = {
-  content : {
+  content: {
     width: '100%',
     height: '100%',
     left: '0px',
     top: '0px',
     bottom: '0px',
     right: '0px',
-    'marginLeft': '0%',
+    marginLeft: '0%',
     padding: 0,
     overflow: 'hidden',
   },
   overlay: {
     width: '85%',
-    'marginLeft': '15%',
-  }
+    marginLeft: '15%',
+  },
 }
 
 const ProfileModal = ({ isOpen, closeModal, onSave }) => (
@@ -31,7 +32,7 @@ const ProfileModal = ({ isOpen, closeModal, onSave }) => (
     >
       <ModalHeader>
         <IconWrapper>
-          <CloseIcon onClick={closeModal} />        
+          <CloseIcon onClick={closeModal} />
         </IconWrapper>
       </ModalHeader>
       <ProfileSettings closeModal={closeModal} />
@@ -41,5 +42,11 @@ const ProfileModal = ({ isOpen, closeModal, onSave }) => (
     </Modal>
   </div>
 )
+
+ProfileModal.propTypes = {
+  isOpen: PropTypes.bool.isRequired,
+  closeModal: PropTypes.func.isRequired,
+  onSave: PropTypes.func.isRequired,
+}
 
 export default ProfileModal

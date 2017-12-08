@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import { actions } from '../redux'
-import { withHandlers, compose, withProps } from 'recompose'
+import { withHandlers, compose } from 'recompose'
 import { MODAL_TYPES } from '../constants'
 
 export default compose(
@@ -11,11 +11,14 @@ export default compose(
     })).concat(store.channels.member),
   }), {
     openModal: actions.modal.openModal,
-    removeChannel : actions.channels.requestRemoveChannel,
+    removeChannel: actions.channels.requestRemoveChannel,
   }),
   withHandlers({
     onAddChannel: props => () => {
-      props.openModal(MODAL_TYPES.ADD_CHANNEL_MODAL)
+      props.openModal({ modalType: MODAL_TYPES.ADD_CHANNEL_MODAL })
+    },
+    editChannel: props => modalData => {
+      props.openModal({ modalType: MODAL_TYPES.EDIT_CHANNEL_MODAL, modalData })
     },
   }),
 )

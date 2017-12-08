@@ -1,6 +1,6 @@
 import { merge } from 'ramda'
 import * as ACTION_TYPES from './action-types'
-import { actionTypes as allActionTypes } from '../'
+import { actionTypes as ALL_ACTION_TYPES } from '..'
 
 const initialState = {
   user: null,
@@ -31,11 +31,14 @@ const reducer = (state = initialState, action) => {
         isLoggingIn: false,
         initialized: true,
       })
-    case allActionTypes.user.AUTH_CHECKED:
+    case ALL_ACTION_TYPES.user.AUTH_CHECKED:
       return merge(state, {
         isAuthenticated: action.payload.hasValidAccessToken,
         initialized: true,
       })
+    case ACTION_TYPES.LOGOUT:
+      return initialState
+
     default:
       return state
   }

@@ -11,14 +11,21 @@ export const Container = styled.div`
   }
 
   &.readonly {
-    width: 100%;
+    width: 90%;
     font-size: 12px;
+    display: inline-flex;
+
+    .DraftEditor-root {
+      width: 100%;      
+    }
 
     .public-DraftEditor-content {
       cursor: text;
-      padding-bottom: 6px;
-      padding-top: 3px;
       padding-left: 3px;
+
+      padding-bottom: 10px;
+      padding-top: 10px;
+      height: 100%;
     }
 
     .DraftEditor-editorContainer {
@@ -27,9 +34,8 @@ export const Container = styled.div`
   }
 
   &.readonly:hover {
-    
     .public-DraftEditor-content {
-      background: whitesmoke;
+      background: #F8F8F8;
       cursor: text;
     }
   }

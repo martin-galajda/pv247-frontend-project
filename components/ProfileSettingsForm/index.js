@@ -3,6 +3,7 @@ import propTypes from 'prop-types'
 import { Field } from 'redux-form'
 import Dropzone from 'react-dropzone'
 import { branch, renderNothing } from 'recompose'
+import withSpinner from '../../enhancers/withSpinner'
 
 const getAdditionalDropzoneProps = user => {
   if (user.temporaryAvatarImageUrl || (user.customData && user.customData.profileImageUrl)) {
@@ -16,24 +17,33 @@ const getAdditionalDropzoneProps = user => {
   return {}
 }
 
-const DropzoneContent = () => (
-  <h1>Upload profile picture</h1>  
-)
+const DropzoneContent = () =>
+  <h1>Upload profile picture</h1>
+
 
 const hideIfHasImage = branch(
   props => props.user.temporaryAvatarImageUrl || (props.user.customData && props.user.customData.profileImageUrl),
-  renderNothing
+  renderNothing,
 )
 const HideableDropzoneContent = hideIfHasImage(DropzoneContent)
 
-const ProfileSettingsForm = ({ title, handleSubmit, pristine, submitting, onDrop, uploadingFile, user }) => (
+const LoadableDropzone = withSpinner(Dropzone)
+
+const ProfileSettingsForm = ({ title, handleSubmit, onDrop, uploadingFile, user }) => (
   <Form onSubmit={handleSubmit}>
     <Title>{title}</Title>
 
     <DropzoneHeader>Profile Picture</DropzoneHeader>
-    <Dropzone className="dropzone" onDrop={onDrop} disabled={uploadingFile} {...getAdditionalDropzoneProps(user)}>
+    <LoadableDropzone
+      isLoading={uploadingFile}
+      spinnerStyles={{ containerHeight: '240px', iconContainerHeight: '240px' }}
+      className="dropzone"
+      onDrop={onDrop}
+      disabled={uploadingFile}
+      {...getAdditionalDropzoneProps(user)}
+    >
       <HideableDropzoneContent user={user} />
-    </Dropzone>
+    </LoadableDropzone>
 
     <FormInput>
       <FormInputLabel>Email</FormInputLabel>
@@ -42,6 +52,7 @@ const ProfileSettingsForm = ({ title, handleSubmit, pristine, submitting, onDrop
         component="input"
         type="email"
         placeholder="Email"
+        readOnly
       />
     </FormInput>
     <FormInput>
@@ -50,7 +61,7 @@ const ProfileSettingsForm = ({ title, handleSubmit, pristine, submitting, onDrop
         name="firstName"
         component="input"
         type="text"
-        placeholder="First name..."        
+        placeholder="First name..."
       />
     </FormInput>
     <FormInput>
@@ -59,7 +70,7 @@ const ProfileSettingsForm = ({ title, handleSubmit, pristine, submitting, onDrop
         name="lastName"
         component="input"
         type="text"
-        placeholder="Last name..."                
+        placeholder="Last name..."
       />
     </FormInput>
   </Form>
@@ -67,8 +78,9 @@ const ProfileSettingsForm = ({ title, handleSubmit, pristine, submitting, onDrop
 
 ProfileSettingsForm.propTypes = {
   handleSubmit: propTypes.func.isRequired,
-  pristine: propTypes.bool.isRequired,
-  submitting: propTypes.bool.isRequired,
+  user: propTypes.object.isRequired,
+  uploadingFile: propTypes.bool.isRequired,
+  onDrop: propTypes.func.isRequired,
   title: propTypes.string.isRequired,
 }
 

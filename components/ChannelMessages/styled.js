@@ -7,13 +7,16 @@ export const Container = styled.div`
   padding: 30px;
   flex-direction: column;
   align-items: stretch;
+  overflow: scroll;
 `
 
 export const MessagesArea = styled.div`
   height: auto;
   width: 100%;
-  flex: 9;
+  flex: 30;
   overflow: scroll;
+  border: 1px solid #fff;
+  box-shadow: 0 0 1px 1px #ccc;
 `
 
 export const EditorArea = styled.div`

@@ -5,7 +5,7 @@ import { withHandlers, compose } from 'recompose'
 export default compose(
   connect(store => ({
     values: store.form && store.form.profile ? store.form.profile.values : null,
-    user: store.user,
+    user: store.user.currentUser,
   }), {
     updateUser: actions.user.requestUpdateUserData,
   }),
@@ -17,11 +17,12 @@ export default compose(
         customData: {
           firstName: values.firstName,
           lastName: values.lastName,
-          profileImageUrl: props.user.temporaryAvatarImageUrl,
+          profileImageUrl: props.user.temporaryAvatarImageUrl
+            || (props.user.customData ? props.user.customData.profileImageUrl : null),
         },
       }
       props.updateUser(userData)
       props.closeModal()
-    }
+    },
   }),
 )

@@ -1,7 +1,7 @@
 import * as ACTION_TYPES from './action-types'
 import { merge } from 'ramda'
 import { EditorState } from 'draft-js'
-import { actionTypes as ALL_ACTION_TYPES } from '../../redux'
+import { actionTypes as ALL_ACTION_TYPES } from '..'
 
 const initialState = {
   editorState: EditorState.createEmpty(),
@@ -15,8 +15,10 @@ const reducer = (state = initialState, action) => {
       })
     case ALL_ACTION_TYPES.channelMessages.ADD_CHANNEL_MESSAGE_SUCCESS:
       return merge(state, {
-        editorState: EditorState.createEmpty()
+        editorState: EditorState.createEmpty(),
       })
+    case ALL_ACTION_TYPES.auth.LOGOUT:
+      return initialState
 
     default:
       return state

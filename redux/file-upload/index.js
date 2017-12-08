@@ -4,8 +4,8 @@ import * as actions from './actions'
 import reducer from './reducer'
 
 export default {
-    actionTypes,
-    epics,
-    actions,
-    reducer,
+  actionTypes,
+  epics,
+  actions,
+  reducer,
 }

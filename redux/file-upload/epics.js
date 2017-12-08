@@ -3,7 +3,7 @@ import {
   uploadFileSuccess,
   uploadFileFailure,
   getUploadedFileUrlSuccess,
-  getUploadedFileUrlFailure
+  getUploadedFileUrlFailure,
 } from './actions'
 import FileService from '../../services/api/FileService'
 import { Observable } from 'rxjs'
@@ -17,9 +17,7 @@ const uploadFileEpic = action$ => action$
     return Observable
       .fromPromise(FileService.uploadFile(formData))
       .map(response => uploadFileSuccess(response, action.payload.actionCreatorOnSuccess))
-      .catch(error => {
-        return Observable.of(uploadFileFailure(error))
-      })
+      .catch(error => Observable.of(uploadFileFailure(error)))
   })
 
 const getUploadedFileEpic = action$ => action$
@@ -30,9 +28,7 @@ const getUploadedFileEpic = action$ => action$
     return Observable
       .fromPromise(FileService.getFileDownloadLink(uploadedFile.id))
       .map(response => getUploadedFileUrlSuccess(response, action.payload.actionCreatorOnSuccess))
-      .catch(error => {
-        return Observable.of(getUploadedFileUrlFailure(error))
-      })
+      .catch(error => Observable.of(getUploadedFileUrlFailure(error)))
   })
 
 const getUploadedFileUrlEpic = action$ => action$
@@ -48,7 +44,7 @@ const getUploadedFileUrlEpic = action$ => action$
 const epics = [
   uploadFileEpic,
   getUploadedFileEpic,
-  getUploadedFileUrlEpic
+  getUploadedFileUrlEpic,
 ]
 
 export default epics

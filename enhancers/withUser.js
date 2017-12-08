@@ -1,10 +1,8 @@
 import { connect } from 'react-redux'
 
-export default connect(state => {
-  return {
-    user: {
-      email: state.user.email,
-      customData: state.user.customData,
-    }
-  }
-})
+export default connect(state => ({
+  user: {
+    email: state.user.currentUser ? state.user.currentUser.email : '',
+    customData: state.user.currentUser ? state.user.currentUser.customData : null,
+  },
+}))

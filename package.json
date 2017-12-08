@@ -13,6 +13,7 @@
     "babel-plugin-css-modules-transform": "^1.2.8",
     "babel-plugin-inline-import": "^2.0.6",
     "bluebird": "^3.5.1",
+    "dotenv": "^4.0.0",
     "draft-js": "^0.10.4",
     "draft-js-hashtag-plugin": "^2.0.1",
     "draft-js-image-plugin": "^2.0.1",
@@ -20,6 +21,7 @@
     "draft-js-plugins-editor": "^2.0.3",
     "isomorphic-fetch": "^2.2.1",
     "medium-draft": "^0.5.6",
+    "moment": "^2.19.3",
     "next": "^4.1.3",
     "next-redux-wrapper": "^1.3.4",
     "next-routes": "^1.1.0",
@@ -44,6 +46,20 @@
     "style-loader": "^0.19.0",
     "styled-components": "^2.2.2",
     "svg-loader": "0.0.2",
-    "uuid": "^3.1.0"
+    "uuid": "^3.1.0",
+    "webpack": "^3.10.0"
+  },
+  "devDependencies": {
+    "@strv/eslint-config-javascript": "^7.8.0",
+    "babel-core": "^6.26.0",
+    "babel-eslint": "^8.0.2",
+    "babel-jest": "^21.2.0",
+    "chance": "^1.0.12",
+    "eslint": "^4.12.0",
+    "eslint-plugin-jest": "^21.3.2",
+    "fetch-mock": "^5.13.1",
+    "jest": "^21.2.1",
+    "jest-localstorage-mock": "^2.1.0",
+    "redux-mock-store": "^1.3.0"
   }
 }

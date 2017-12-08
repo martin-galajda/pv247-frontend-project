@@ -1,12 +1,13 @@
 import { connect } from 'react-redux'
 import { actions } from '../redux'
-import { compose, withHandlers, lifecycle } from 'recompose'
+import { compose, withHandlers } from 'recompose'
 import { RichUtils, convertToRaw } from 'draft-js'
 import { withRouter } from 'next/router'
 
 export default compose(
   connect(state => ({
     editorState: state.editor.editorState,
+    user: state.user.currentUser,
   }), {
     onChange: actions.editor.updateEditorState,
     addChannelMessage: actions.channelMessages.requestAddChannelMessage,
@@ -14,14 +15,15 @@ export default compose(
   withRouter,
   withHandlers({
     postMessage: props => () => {
-      const channelId = props.router.query.channelId
+      const channelId = props.router.asPath.replace('/channels/', '')
+
       const editorState = props.editorState
       const currentContent = editorState.getCurrentContent()
 
       const content = convertToRaw(currentContent)
       const customData = {
-        upvotes: 0,
-        downvotes: 0,
+        upvotes: [],
+        downvotes: [],
         reactions: [],
       }
 
@@ -32,7 +34,7 @@ export default compose(
       })
     },
     insertNewLine: ({ onChange, editorState }) => () => {
-      onChange(RichUtils.insertSoftNewline(editorState))      
+      onChange(RichUtils.insertSoftNewline(editorState))
     },
-  })
+  }),
 )

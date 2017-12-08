@@ -32,7 +32,7 @@ export const SidebarItem = styled.div`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  a {
+  span {
     color: #ccc;
     text-decoration: none;
   }

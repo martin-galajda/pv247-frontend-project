@@ -15,12 +15,11 @@ export const getChannelsFailure = response => ({
   payload: response,
 })
 
-export const requestAddChannel = ({ customData, name }) => ({
+export const requestAddChannel = ({ channelData, onFinish, email }) => ({
   type: ACTION_TYPES.REQUEST_ADD_CHANNEL,
-  payload: {
-    name,
-    customData,
-  },
+  payload: channelData,
+  onFinish,
+  email,
 })
 
 export const addChannelSuccess = response => ({
@@ -40,9 +39,12 @@ export const requestRemoveChannel = channelId => ({
   },
 })
 
-export const removeChannelSuccess = response => ({
+export const removeChannelSuccess = (response, email) => ({
   type: ACTION_TYPES.REMOVE_CHANNEL_SUCCESS,
-  payload: response,
+  payload: {
+    ...response,
+    email,
+  },
 })
 
 export const removeChannelFailure = response => ({
@@ -50,14 +52,22 @@ export const removeChannelFailure = response => ({
   payload: response,
 })
 
-export const requestReplaceChannel = channelData => ({
+export const requestReplaceChannel = ({ channelData, channelId, onFinish, email }) => ({
   type: ACTION_TYPES.REQUEST_REPLACE_CHANNEL,
-  payload: channelData,
+  payload: {
+    channelData,
+    channelId,
+  },
+  onFinish,
+  email,
 })
 
-export const replaceChannelSuccess = response => ({
+export const replaceChannelSuccess = (response, email) => ({
   type: ACTION_TYPES.REPLACE_CHANNEL_SUCCESS,
-  payload: response,
+  payload: {
+    ...response,
+    email,
+  },
 })
 
 export const replaceChannelFailure = response => ({

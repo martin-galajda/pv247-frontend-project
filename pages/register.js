@@ -1,15 +1,16 @@
 import withRedux from '../enhancers/withRedux'
 import RegisterForm from '../containers/RegisterForm'
 import App from '../components/App'
+import RegisterPage from '../components/RegisterPage'
 
-import { compose, lifecycle } from 'recompose'
+import { compose } from 'recompose'
 
 const IndexPage = () => (
-    <App>
-        <RegisterForm />
-    </App>
+  <App>
+    <RegisterPage>
+      <RegisterForm />
+    </RegisterPage>
+  </App>
 )
 
-export default compose(
-    withRedux,
-)(IndexPage)
+export default compose(withRedux)(IndexPage)

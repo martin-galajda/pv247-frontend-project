@@ -14,13 +14,7 @@ export const routeChange$ = Observable.create(obs => {
 }).share()
 
 export const routeChangeComplete$ = Observable.create(obs => {
-  Router.onRouteChangeComplete = (url) => {
+  Router.onRouteChangeComplete = url => {
     obs.next(url)
-  }
-}).share()
-
-export const routeChangeError$ = Observable.create(obs => {
-  Router.onRouteChangeError = () => {
-    obs.next()
   }
 }).share()
