@@ -32,7 +32,7 @@ const LoginForm = ({ handleSubmit, pristine, submitting }) => (
     </Form>
     <LinkNavigation>
         Already have an account?
-      <Link href="/login"> <a className="login"> Sign in </a></Link>
+      <Link href="/register" as="/login"><a className="login">Sign in</a></Link>
     </LinkNavigation>
   </Container>
 )
