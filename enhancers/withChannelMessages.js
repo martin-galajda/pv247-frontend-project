@@ -1,7 +1,6 @@
 import { connect } from 'react-redux'
 import { actions } from '../redux'
-import { routeChange$ } from '../services/router-observable'
-import { compose, lifecycle, mapProps, withHandlers } from 'recompose'
+import { compose, mapProps, withHandlers } from 'recompose'
 import { withRouter } from 'next/router'
 import { mergeDeepRight } from 'ramda'
 

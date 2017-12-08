@@ -29,7 +29,7 @@ const HideableRemoveIcon = branch(
 const getMessageAuthor = user => {
   const firstPart = user.customData && user.customData.firstName
     ? user.customData.firstName
-    : user.customData.email
+    : user.email
   const secondPart = user.customData && user.customData.lastName
     ? user.customData.lastName
     : ''
