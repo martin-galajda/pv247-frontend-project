@@ -27,8 +27,8 @@ const ReactTokenInput = ({ selected, onRemove, onAdd, onChangeInput, inputValue,
   return (
     <Container onClick={focusInputRef}>
       <InputArea>
-        {selected.map((selectedValue, idx) => (<SelectedInput
-          key={`${selectedValue}-${idx}`}
+        {selected.map(selectedValue => (<SelectedInput
+          key={`${selectedValue}`}
           value={selectedValue}
           onDeselect={onRemove}
         />))}

@@ -42,13 +42,11 @@ describe('User epics', () => {
     beforeEach(() => {
       users = range(1, 5).map(makeUser)
       users[0].email = email
-      
-      apiResponse = users.map(user => {
-        return {
-          ...user,
-          customData: encodeJSONAsStr(user.customData),
-        }
-      })
+
+      apiResponse = users.map(user => ({
+        ...user,
+        customData: encodeJSONAsStr(user.customData),
+      }))
 
       const url = `${config.baseApiPath}${config.appId}/user`
       fetchMock.get(url, {
@@ -91,5 +89,4 @@ describe('User epics', () => {
       ]))
     })
   })
-
 })

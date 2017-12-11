@@ -7,8 +7,8 @@ import ChannelMessage from '../ChannelMessage'
 const ChannelMessages = ({ messages, toggleLike, removeMessage, toggleDislike }) => (
   <Container>
     <MessagesArea>
-      {messages.map((message, idx) => (<ChannelMessage
-        key={idx}
+      {messages.map(message => (<ChannelMessage
+        key={message.id}
         {...message}
         toggleDislike={toggleDislike}
         toggleLike={toggleLike}

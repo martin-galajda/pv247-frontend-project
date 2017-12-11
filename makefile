@@ -7,8 +7,7 @@ node_modules: package.json
 install: node_modules
 
 lint: install
-	eslint --ext .js --report-unused-disable-directives --fix components containers enhancers pages redux services utils 
-	remark --quiet .
+	eslint --ext .js --report-unused-disable-directives --fix tests components containers enhancers pages redux services utils 
 
 test: install
 	jest
