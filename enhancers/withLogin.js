@@ -4,7 +4,9 @@ import { reduxForm } from 'redux-form'
 import { withHandlers, compose, withProps } from 'recompose'
 
 export default compose(
-  connect(null, {
+  connect(state => ({
+    authError: state.auth.error,
+  }), {
     requestLogin: actions.auth.requestLogin,
   }),
   withHandlers({
@@ -14,6 +16,14 @@ export default compose(
   }),
   withProps({
     title: 'Login',
+    link: {
+      label: 'Don\'t have an account?',
+      actionName: 'Sign up',
+      href: '/register',
+      as: '/register',
+      className: 'register',
+    },
+    actionLabel: 'Login',
   }),
   reduxForm({
     form: 'login',

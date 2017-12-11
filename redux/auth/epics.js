@@ -13,16 +13,13 @@ import Router from 'next/router'
 const loginEpic = action$ => action$
   .ofType(ACTION_TYPES.REQUEST_LOGIN)
   .switchMap(action => {
-    console.log(action)
     return Observable
       .fromPromise(AuthService.authenticateUser(action.payload.email, action.payload.password))
       .map(user => {
-        console.log(user)
         return loginSuccess(user.accessToken, user.email)
       })
       .catch(error => {
-        console.log(error)
-        return Observable.of(loginFailure(error))
+        return Observable.of(loginFailure(error.message))
       })
   })
 
@@ -33,7 +30,8 @@ const registerEpic = action$ => action$
     .map(() => registerSuccess(action.payload.email, action.payload.password))
     .catch(error => {
       console.log(error)
-      return Observable.of(registerFailure(error))
+      console.log(`Message: ${error.message}`)
+      return Observable.of(registerFailure(error.message))
     }))
 
 const registerSuccessEpic = action$ => action$
@@ -43,7 +41,8 @@ const registerSuccessEpic = action$ => action$
     .map(user => loginSuccess(user.accessToken, user.email))
     .catch(error => {
       console.log(error)
-      return Observable.of(loginFailure(error))
+      console.log(`Message: ${error.message}`)
+      return Observable.of(loginFailure(error.message))
     }))
 
 const logoutEpic = action$ => action$

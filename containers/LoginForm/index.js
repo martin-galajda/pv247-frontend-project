@@ -1,4 +1,4 @@
-import LoginForm from '../../components/LoginForm'
+import AuthForm from '../../components/AuthForm'
 import withLogin from '../../enhancers/withLogin'
 
-export default withLogin(LoginForm)
+export default withLogin(AuthForm)

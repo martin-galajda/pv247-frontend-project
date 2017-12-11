@@ -16,6 +16,7 @@ describe('Auth reducers', () => {
         isAuthenticated: false,
         accessToken: null,
         initialized: false,
+        error: null,
       })
   })
 
@@ -30,17 +31,31 @@ describe('Auth reducers', () => {
         isAuthenticated: true,
         accessToken,
         initialized: true,
+        error: null,
       })
   })
 
-  test('requestRegister action', () => {
-    expect(reducer(undefined, actions.loginFailure()))
+  test('loginFailure action', () => {
+    expect(reducer(undefined, actions.loginFailure('Invalid email')))
       .toEqual({
         user: null,
         isLoggingIn: false,
         isAuthenticated: false,
         accessToken: null,
-        initialized: true,
+        initialized: false,
+        error: 'Invalid email',
+      })
+  })
+
+  test('registerFailure action', () => {
+    expect(reducer(undefined, actions.registerFailure('Invalid email')))
+      .toEqual({
+        user: null,
+        isLoggingIn: false,
+        isAuthenticated: false,
+        accessToken: null,
+        initialized: false,
+        error: 'Invalid email',
       })
   })
 
@@ -53,6 +68,7 @@ describe('Auth reducers', () => {
         isAuthenticated: hasValidAccessToken,
         accessToken: null,
         initialized: true,
+        error: null,
       })
   })
 
@@ -64,6 +80,7 @@ describe('Auth reducers', () => {
         isAuthenticated: false,
         accessToken: null,
         initialized: false,
+        error: null,
       })
   })
 })

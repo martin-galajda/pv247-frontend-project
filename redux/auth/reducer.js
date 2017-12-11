@@ -8,6 +8,7 @@ const initialState = {
   isLoggingIn: false,
   accessToken: null,
   initialized: false,
+  error: null,
 }
 
 const reducer = (state = initialState, action) => {
@@ -29,12 +30,22 @@ const reducer = (state = initialState, action) => {
       return merge(state, {
         isAuthenticated: false,
         isLoggingIn: false,
-        initialized: true,
+        error: action.payload.error,
+      })
+    case ACTION_TYPES.REGISTER_FAILURE:
+      return merge(state, {
+        isAuthenticated: false,
+        isLoggingIn: false,
+        error: action.payload.error,
       })
     case ALL_ACTION_TYPES.user.AUTH_CHECKED:
       return merge(state, {
         isAuthenticated: action.payload.hasValidAccessToken,
         initialized: true,
+      })
+    case ALL_ACTION_TYPES.router.ROUTE_CHANGE_FINISH:
+      return merge(state, {
+        error: null,
       })
     case ACTION_TYPES.LOGOUT:
       return initialState

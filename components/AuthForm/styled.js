@@ -101,3 +101,12 @@ export const FormBackground = styled.div`
   opacity: 0.7;
   background: black;
 `
+
+export const FormErrors = styled.div`
+  background: #EFDFDF;
+  height: 25px;
+  padding-top: 10px;
+  color: black;
+  font-size: 20px;
+  border: 1px solid red;
+`

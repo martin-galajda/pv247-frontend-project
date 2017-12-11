@@ -16,10 +16,10 @@ export const loginSuccess = (accessToken, email) => ({
   },
 })
 
-export const loginFailure = data => ({
+export const loginFailure = error => ({
   type: ACTION_TYPES.LOGIN_FAILURE,
   payload: {
-    data,
+    error,
   },
 })
 
@@ -39,11 +39,10 @@ export const registerSuccess = (email, password) => ({
   },
 })
 
-export const registerFailure = data => ({
+export const registerFailure = error => ({
   type: ACTION_TYPES.REGISTER_FAILURE,
   payload: {
-    email: data.email,
-    customData: data.customData,
+    error,
   },
 })
 
