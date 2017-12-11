@@ -12,16 +12,10 @@ import Router from 'next/router'
 
 const loginEpic = action$ => action$
   .ofType(ACTION_TYPES.REQUEST_LOGIN)
-  .switchMap(action => {
-    return Observable
-      .fromPromise(AuthService.authenticateUser(action.payload.email, action.payload.password))
-      .map(user => {
-        return loginSuccess(user.accessToken, user.email)
-      })
-      .catch(error => {
-        return Observable.of(loginFailure(error.message))
-      })
-  })
+  .switchMap(action => Observable
+    .fromPromise(AuthService.authenticateUser(action.payload.email, action.payload.password))
+    .map(user => loginSuccess(user.accessToken, user.email))
+    .catch(error => Observable.of(loginFailure(error.message))))
 
 const registerEpic = action$ => action$
   .ofType(ACTION_TYPES.REQUEST_REGISTER)
