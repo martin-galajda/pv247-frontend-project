@@ -27,6 +27,7 @@ export const reducers = {
   modal: modal.reducer,
   editor: editor.reducer,
   channelMessages: channelMessages.reducer,
+  router: router.reducer,
 }
 
 export const actions = {

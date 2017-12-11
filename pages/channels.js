@@ -1,6 +1,6 @@
 import withRedux from '../enhancers/withRedux'
 import withAuth from '../enhancers/withAuth'
-import App from '../components/App'
+import App from '../containers/App'
 import Layout from '../containers/Layout'
 import ChannelMessages from '../containers/ChannelMessages'
 

@@ -16,6 +16,7 @@ import {
 import AppService from '../../services/api/AppService'
 import { Observable } from 'rxjs'
 import { actionTypes as ALL_ACTION_TYPES } from '..'
+import Router from 'next/router'
 
 const onLoginSuccess = action$ => action$
   .ofType(ALL_ACTION_TYPES.user.REQUEST_GET_USER_DATA)
@@ -37,6 +38,10 @@ const addChannelsEpic = action$ => action$
     .fromPromise(AppService.addChannel(action.payload))
     .map(response => {
       action.onFinish()
+
+      const newChannel = response.channels.find(channel => channel.name === action.payload.name)
+      Router.push('/channels', `/channels/${newChannel.id}`)
+
       return addChannelSuccess({
         ...response,
         email: action.email,
@@ -51,10 +56,17 @@ const removeChannelsEpic = (action$, store) => action$
   .ofType(ACTION_TYPES.REQUEST_REMOVE_CHANNEL)
   .switchMap(action => Observable
     .fromPromise(AppService.removeChannel(action.payload.channelId))
-    .map(response => removeChannelSuccess(
-      response,
-      store.getState().user.currentUser.email,
-    ))
+    .map(response => {
+      const deletedChannelUrl = `/channels/${action.payload.channelId}`
+      if (store.getState().router && store.getState().router.currentUrl === deletedChannelUrl) {
+        Router.push('/index', '/home')
+      }
+
+      return removeChannelSuccess(
+        response,
+        store.getState().user.currentUser.email,
+      )
+    })
     .catch(error => Observable.of(removeChannelFailure(error))))
 
 const updateChannelEpic = action$ => action$

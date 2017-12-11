@@ -1,12 +1,13 @@
 import withRedux from '../enhancers/withRedux'
 import withAuth from '../enhancers/withAuth'
-import App from '../components/App'
+import App from '../containers/App'
+import HomeContent from '../components/HomeContent'
 import Layout from '../containers/Layout'
 
 const HomePage = () => (
   <App>
     <Layout>
-        Content...
+      <HomeContent />
     </Layout>
   </App>
 )

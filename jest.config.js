@@ -1,6 +1,6 @@
 
 module.exports = {
   verbose: true,
-  bail: false,
+  bail: true,
   setupFiles: ['jest-localstorage-mock', './tests/setup.js']
 }

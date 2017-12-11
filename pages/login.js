@@ -1,7 +1,7 @@
 import withRedux from '../enhancers/withRedux'
 import withAuth from '../enhancers/withAuth'
 import LoginForm from '../containers/LoginForm'
-import App from '../components/App'
+import App from '../containers/App'
 import RegisterPage from '../components/RegisterPage'
 
 import { compose } from 'recompose'

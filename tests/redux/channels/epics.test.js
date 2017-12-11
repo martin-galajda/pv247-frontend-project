@@ -8,6 +8,10 @@ import fetchMock from 'fetch-mock'
 import Chance from 'chance'
 import { range } from 'ramda'
 
+jest.mock('next/router', () => ({
+  push: jest.fn(),
+}))
+
 const chance = new Chance()
 
 const epicMiddleware = createEpicMiddleware(rootEpic)
