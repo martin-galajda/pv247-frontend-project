@@ -21,7 +21,7 @@ const AuthForm = ({ handleSubmit, pristine, submitting, authError, link, actionL
         {authError}
       </HideableFormErrors>
       <FormInput>
-        <label> Email </label>
+        <label>Email</label>
         <Field
           name="email"
           component="input"

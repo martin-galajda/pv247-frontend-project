@@ -7,6 +7,7 @@ export const Container = styled.div`
   margin-bottom: auto;
   width: 550px;
   height: 700px;
+  max-height: 80%;
   color: white;
 
   display: flex;
@@ -31,6 +32,7 @@ export const FormInput = styled.div`
   margin: 10px;
 
   width: 350px;
+  max-width: 100%;
 
   input {
     width: 100%;
@@ -96,6 +98,7 @@ export const FormBackground = styled.div`
   position: absolute;
   width: 550px;
   height: 700px;
+  max-height: 80%;
   border-radius: 30px;
 
   opacity: 0.7;
